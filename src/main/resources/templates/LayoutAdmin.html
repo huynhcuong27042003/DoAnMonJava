@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dashboard</title>
+</head>
+
+<body class="text-gray-800 font-inter">
+<!--Start: Sidebar-->
+<!--Removed classes: sidebar-menu-->
+<div class="fixed top-0 left-0 z-50 w-64 h-full p-4 transition-transform"
+     style="background-color: rgb(95,207,134);">
+    <a href="#" class="flex items-center pb-4 border-b-2 border-b-gray-200">
+        <!--        <img src="./assets/images/logo_new.png" alt="Logo" class="object-cover w-8 h-8 rounded">-->
+        <span class="ml-3 text-lg font-bold text-black">Dịch vụ cho thuê xe</span>
+    </a>
+    <ul class="mt-4">
+        <!--Removed classes: active group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950
+                    group-[.selected]:text-gray-100-->
+        <li class="mb-1 group">
+            <a href="#"
+               class="flex items-center px-4 py-2 text-2xl rounded-md hover:bg-teal-500 hover:text-gray-50">
+                <i class="mr-3 text-2xl text-white ri-home-2-line"></i>
+                <span class="text-lg font-semibold text-black">Quản lí tài khoản</span>
+            </a>
+        </li>
+        <li class="mb-1 group">
+            <!--Removed classes: group-[.active]:bg-gray-800 group-[.active]:text-white
+                group-[.selected]:bg-gray-950
+                group-[.selected]:text-gray-100-->
+            <a href="#"
+               class="flex items-center px-4 py-2 text-gray-300 rounded-md hover:bg-teal-500 hover:text-gray-100 sidebar-dropdown-toggle">
+                <i class="mr-3 text-2xl text-white ri-instance-line"></i>
+                <span class="text-lg font-semibold text-black">Xe</span>
+                <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90 text-black"></i>
+            </a>
+            <ul class="pl-7 mt-2 hidden group-[.selected]:block list-none">
+                <li class="mb-4">
+                    <a th:href="@{/hangxe/list}"
+                       class="flex items-center text-sm text-black hover:text-gray-100 before:content-none">
+                        <i class="mr-3 text-lg ri-filter-3-line"></i>
+                        Quản lí hãng xe
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a th:href="@{/loaixe/list}"
+                       class="flex items-center text-sm text-black hover:text-gray-100 before:content-none">
+                        <i class="mr-3 text-lg ri-motorbike-fill"></i>
+                        Quản lí loại xe
+                    </a>
+                </li>
+
+                <li class="mb-4">
+                    <a th:href="@{/xe/list}"
+                       class="flex items-center text-sm text-black hover:text-gray-100 before:content-none">
+                        <i class="mr-3 text-lg ri-task-line"></i>
+                        Quản lí xe
+                    </a>
+                </li>
+            </ul>
+
+        </li>
+        <li class="mb-1 group">
+            <!--Removed classes: group-[.active]:bg-gray-800 group-[.active]:text-white
+                group-[.selected]:bg-gray-950
+                group-[.selected]:text-gray-100-->
+            <a href="#"
+               class="flex items-center px-4 py-2 text-gray-300 rounded-md hover:bg-teal-500 hover:text-gray-100 sidebar-dropdown-toggle">
+                <i class="mr-3 text-2xl text-white ri-flashlight-line"></i>
+                <span class="text-lg font-semibold text-black">Dịch vụ</span>
+                <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90 text-black"></i>
+            </a>
+            <ul class="pl-7 mt-2 hidden group-[.selected]:block">
+                <li class="mb-4">
+                    <a href=""
+                       class="flex items-center text-sm text-black hover:text-gray-100 before:content-none">
+                        <i class="mr-3 text-lg ri-bill-line"></i>
+                        Quản lí hóa đơn</a>
+                </li>
+                <li class="mb-4">
+                    <a th:href="@{/khuyenmai/list}"
+                       class="flex items-center text-sm text-black hover:text-gray-100 before:content-none">
+                        <i class="mr-3 text-lg ri-coupon-fill"></i>
+                        Quản lí khuyến mãi</a>
+                </li>
+                <li class="mb-4">
+                    <a th:href="@{/phuongthucthanhtoan/list}"
+                       class="flex items-center text-sm text-black hover:text-gray-100 before:content-none">
+                        <i class="mr-3 text-lg ri-bank-card-line"></i>
+                        Phương thức thanh toán</a>
+                </li>
+            </ul>
+        </li>
+        <li class="mb-1 group">
+            <!--Removed classes: group-[.active]:bg-gray-800 group-[.active]:text-white
+                group-[.selected]:bg-gray-950
+                group-[.selected]:text-gray-100-->
+            <a th:href="@{/diadiem/list}"
+               class="flex items-center px-4 py-2 text-gray-300 rounded-md hover:bg-teal-500 hover:text-gray-100">
+                <i class="mr-3 text-2xl text-white ri-map-pin-line"></i>
+                <span class="text-lg font-semibold text-black">Quản lí địa điểm </span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="fixed top-0 left-0 z-40 w-full h-full bg-black/50 md:hidden sidebar-overlay"></div>
+<!--End: Sidebar-->
+
+<!--Start: Main -->
+<main class="w-full md:w-[calc(100%-256px)] md:ml-64 bg-gray-50 min-h-screen transition-all main roun">
+    <div class="sticky top-0 left-0 z-30 flex items-center px-6 py-2 bg-white shadow-md shadow-black/5">
+        <button type="button" class="text-lg text-gray-600 sidebar-toggle">
+            <!-- <i class="ri-menu-line"></i> -->
+        </button>
+        <!-- <ul class="flex items-center ml-4 text-sm">
+            <li class="mr-2">
+                <a href="#" class="font-medium text-gray-400 hover:text-gray-600">Dashboard</a>
+            </li>
+            <li class="mr-2 font-medium text-gray-600">/</li>
+            <li class="mr-2 font-medium text-gray-600">Analytics</li>
+        </ul> -->
+        <ul class="flex items-center ml-auto mr-10">
+            <h1 class="text-base font-medium">Chào, Nguyễn Quốc Huy</h1>
+            <li class="ml-3 dropdown">
+                <button type="button" class="flex items-center dropdown-toggle">
+                    <!--Avatar of admin-->
+                    <img src="https://via.placeholder.com/50" alt="Avatar of admin"
+                         class="block object-cover align-middle rounded-full">
+                </button>
+                <ul
+                        class="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
+                    <li>
+                        <a href="#"
+                           class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Profile</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Settings</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-blue-500 hover:bg-gray-50">Logout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <!--Table-->
+    <section layout:fragment="content">
+        <!-- Dynamic content goes here -->
+    </section>
+
+</main>
+End: main
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="/js/dashboard/script.js"></script>
+<script src="/js/dashboard/script_2.js"></script>
+</body>
+<script type="text/javascript">
+    $('.datepicker').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        orientation: "bottom auto",
+        language: 'vi'
+    });
+    $('form').submit(function() {
+        var ngayKhuyenMai = $('#ngayKhuyenMai').datepicker('getDate');
+        var ngayKetThuc = $('#ngayKetThuc').datepicker('getDate');
+
+        if (ngayKhuyenMai && ngayKetThuc && ngayKhuyenMai > ngayKetThuc) {
+            $('#ngayKhuyenMai').addClass('is-invalid');
+            $('#ngayKetThuc').addClass('is-invalid');
+            return false;
+        } else {
+            $('#ngayKhuyenMai').removeClass('is-invalid');
+            $('#ngayKetThuc').removeClass('is-invalid');
+            return true;
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Khuyến mãi</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="container mt-4">
+    <h2>Edit Khuyến mãi</h2>
+    <form th:action="@{/khuyenmai/edit/{id}(id=${khuyenmai.maKhuyenMai})}" th:object="${khuyenmai}" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="tenKhuyenMai">Tên Khuyến mãi:</label>
+            <input type="text" class="form-control" id="tenKhuyenMai" th:field="*{tenKhuyenMai}" required/>
+            <span th:if="${#fields.hasErrors('tenKhuyenMai')}" th:errors="*{tenKhuyenMai}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="code">Mã Khuyến mãi:</label>
+            <input type="text" class="form-control" id="code" th:field="*{code}" required pattern="[A-Z]{6}"
+                   oninvalid="this.setCustomValidity('Mã khuyến mãi phải là 6 ký tự in hoa')" oninput="setCustomValidity('')" />
+            <span th:if="${#fields.hasErrors('code')}" th:errors="*{code}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="noiDungKhuyenMai">Nội dung Khuyến mãi:</label>
+            <textarea class="form-control" id="noiDungKhuyenMai" rows="3" th:field="*{noiDungKhuyenMai}" required></textarea>
+            <span th:if="${#fields.hasErrors('noiDungKhuyenMai')}" th:errors="*{noiDungKhuyenMai}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="phanTramKhuyenMai">Phần trăm Khuyến mãi:</label>
+            <input type="number" class="form-control" id="phanTramKhuyenMai" th:field="*{phanTramKhuyenMai}" required/>
+            <span th:if="${#fields.hasErrors('phanTramKhuyenMai')}" th:errors="*{phanTramKhuyenMai}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <span th:if="${#fields.hasErrors('hinhAnhKhuyenMai')}" th:errors="*{hinhAnhKhuyenMai}" class="text-danger"></span>
+            <img th:if="${khuyenmai.hinhAnhKhuyenMai != null}" th:src="@{'/images/' + ${khuyenmai.hinhAnhKhuyenMai}}" style="max-width: 200px; max-height: 200px;" class="mt-2"/>
+            <input type="file" id="image" name="image" />
+
+        </div>
+
+        <div class="form-group">
+            <label for="ngayKhuyenMai">Ngày Khuyến Mãi</label>
+            <input type="date" class="form-control datepicker" id="ngayKhuyenMai" th:field="*{ngayKhuyenMai}" placeholder="DD-MM-YYYY" required
+                   th:errorclass="${#fields.hasErrors('ngayKhuyenMai') ? 'is-invalid' : ''}" />
+            <div class="invalid-feedback">Ngày khuyến mãi là bắt buộc hoặc không được sau ngày kết thúc.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="ngayKetThuc">Ngày Kết Thúc</label>
+            <input type="date" class="form-control datepicker" id="ngayKetThuc" th:field="*{ngayKetThuc}" placeholder="DD-MM-YYYY" required
+                   th:errorclass="${#fields.hasErrors('ngayKetThuc') ? 'is-invalid' : ''}" />
+            <div class="invalid-feedback">Ngày kết thúc phải lớn hơn ngày khuyến mãi và là bắt buộc.</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a href="/khuyenmai/list" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>
+</section>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Datepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.vi.min.js"></script>
+<script type="text/javascript">
+    $('.datepicker').datepicker({
+        format: 'dd-mm-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        orientation: "bottom auto",
+        language: 'vi'
+    });
+    $('form').submit(function() {
+        var ngayKhuyenMai = $('#ngayKhuyenMai').datepicker('getDate');
+        var ngayKetThuc = $('#ngayKetThuc').datepicker('getDate');
+
+        if (ngayKhuyenMai > ngayKetThuc) {
+            $('.datepicker').datepicker('update');
+            $('#ngayKhuyenMai').addClass('is-invalid');
+            $('#ngayKetThuc').addClass('is-invalid');
+            return false;
+        }
+
+        return true;
+    });
+</script>
+</body>
+</html>

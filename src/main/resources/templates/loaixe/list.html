@@ -1,0 +1,41 @@
+<!-- resources/templates/loaixe/list.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Loại Xe</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<section layout:fragment="content">
+    <!-- Dynamic content goes here -->
+    <div class="container mt-5">
+        <h2 class="mb-4">Danh sách loại xe</h2>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Tên Loại Xe</th>
+                <th>Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loaiXe : ${loaiXeList}">
+                <td th:text="${loaiXe.maLoai}"></td>
+                <td th:text="${loaiXe.tenLoai}"></td>
+                <td>
+                    <a th:href="@{/loaixe/edit/{id}(id=${loaiXe.maLoai})}" class="btn btn-sm btn-primary">Sửa</a>
+                    <a th:href="@{/loaixe/delete/{id}(id=${loaiXe.maLoai})}" class="btn btn-sm btn-danger"
+                       onclick="return confirm('Bạn có chắc chắn muốn xóa loại xe này không?')">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/loaixe/add" class="btn btn-success">Thêm mới</a>
+    </div>
+</section>
+</body>
+</html>

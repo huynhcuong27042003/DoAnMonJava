@@ -1,0 +1,28 @@
+<!-- resources/templates/loaixe/add.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm mới Loại Xe</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="container mt-5">
+    <form th:action="@{/loaixe/add}" th:object="${loaiXe}" method="post">
+        <div class="form-group">
+            <label for="tenLoai">Tên Loại Xe</label>
+            <input type="text" class="form-control" id="tenLoai" th:field="*{tenLoai}" required>
+            <small th:if="${#fields.hasErrors('tenLoai')}" th:errors="*{tenLoai}" class="text-danger"></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a href="/loaixe/list" class="btn btn-secondary ml-2">Hủy bỏ</a>
+    </form>
+</div>
+</section>
+</body>
+</html>

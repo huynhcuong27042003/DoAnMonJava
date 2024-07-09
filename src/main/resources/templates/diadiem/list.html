@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+<body>
+<section layout:fragment="content">
+    <!-- Dynamic content goes here -->
+    <div class="container mt-5">
+        <a th:href="@{/diadiem/add}" class="btn btn-primary mb-3">Thêm địa điểm mới</a>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Tên địa điểm</th>
+                <th scope="col">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="diaDiem : ${diaDiems}">
+                <td th:text="${diaDiem.maDiaDiem}"></td>
+                <td th:text="${diaDiem.tenDiaDiem}"></td>
+                <td>
+                    <a th:href="@{/diadiem/edit/{id}(id=${diaDiem.maDiaDiem})}" class="btn btn-info btn-sm">Sửa</a>
+                    <a th:href="@{/diadiem/delete/{id}(id=${diaDiem.maDiaDiem})}" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Bạn có chắc chắn muốn xóa địa điểm này không?')">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

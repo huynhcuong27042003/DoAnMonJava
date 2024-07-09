@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm Khuyến Mãi</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="container mt-5">
+    <h2 class="mb-4">Thêm Khuyến Mãi</h2>
+
+
+    <form th:action="@{/khuyenmai/add}" th:object="${khuyenmai}" method="post" enctype="multipart/form-data">
+
+        <div class="form-group">
+            <label for="tenKhuyenMai">Tên Khuyến Mãi</label>
+            <input type="text" class="form-control" id="tenKhuyenMai" th:field="*{tenKhuyenMai}" required>
+            <div class="invalid-feedback">Tên khuyến mãi là bắt buộc.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="code">Mã Khuyến mãi:</label>
+            <input type="text" class="form-control" id="code" th:field="*{code}" required pattern="[A-Z]{6}"
+                   oninvalid="this.setCustomValidity('Mã khuyến mãi phải là 6 ký tự in hoa')" oninput="setCustomValidity('')" />
+            <span th:if="${#fields.hasErrors('code')}" th:errors="*{code}" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="noiDungKhuyenMai">Nội Dung Khuyến Mãi</label>
+            <textarea class="form-control" id="noiDungKhuyenMai" th:field="*{noiDungKhuyenMai}" required></textarea>
+            <div class="invalid-feedback">Nội dung khuyến mãi là bắt buộc.</div>
+        </div>
+
+        <div class="form-group">
+            <label for="phanTramKhuyenMai">Phần Trăm Khuyến Mãi</label>
+            <input type="number" class="form-control" id="phanTramKhuyenMai" th:field="*{phanTramKhuyenMai}" required>
+            <div class="invalid-feedback">Phần trăm khuyến mãi phải từ 1 đến 100.</div>
+        </div>
+
+        <div>
+            <label for="image">Hình Ảnh Khuyến Mãi:</label>
+            <input type="file" id="image" name="image" />
+        </div>
+
+        <div class="form-group">
+            <label for="ngayKhuyenMai">Ngày Khuyến Mãi</label>
+            <input type="date" class="form-control datepicker" id="ngayKhuyenMai" th:field="*{ngayKhuyenMai}" placeholder="DD-MM-YYYY" required>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('ngayKhuyenMai')}" th:errors="*{ngayKhuyenMai}"></div>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('ngayKetThuc')}" th:errors="*{ngayKetThuc}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="ngayKetThuc">Ngày Kết Thúc</label>
+            <input type="date" class="form-control datepicker" id="ngayKetThuc" th:field="*{ngayKetThuc}" placeholder="DD-MM-YYYY" required>
+        </div>
+
+
+        <button type="submit" class="btn btn-primary">Lưu</button>
+        <a href="/khuyenmai/list" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.vi.min.js"></script>
+
+
+</body>
+</html>

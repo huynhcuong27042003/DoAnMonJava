@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Xe</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="container mt-5">
+    <h2>Edit Xe</h2>
+    <!-- Form for editing Xe -->
+    <form th:action="@{/xe/edit/{bienSo}(bienSo=${xe.bienSoXe})}" th:object="${xe}" method="post" enctype="multipart/form-data">
+        <!-- Hidden field for bienSoXe -->
+        <input type="hidden" th:field="*{bienSoXe}">
+
+        <div class="mb-3">
+            <label for="hangXe" class="form-label">Địa điểm</label>
+            <select th:field="*{hangXe}" class="form-control" id="hangXe">
+                <option th:each="hangXe : ${hangxe}"
+                        th:value="${hangXe.maHangXe}" th:text="${hangXe.tenHang}" th:selected="${hangXe.maHangXe ==
+                xe.hangXe.maHangXe}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="loaiXe" class="form-label">Địa điểm</label>
+            <select th:field="*{loaiXe}" class="form-control" id="loaiXe">
+                <option th:each="loaiXe : ${loaixe}"
+                        th:value="${loaiXe.maLoai}" th:text="${loaiXe.tenLoai}" th:selected="${loaiXe.maLoai ==
+                xe.loaiXe.maLoai}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="diaDiem" class="form-label">Địa điểm</label>
+            <select th:field="*{diaDiem}" class="form-control" id="diaDiem">
+                <option th:each="diaDiem : ${diadiem}"
+                        th:value="${diaDiem.maDiaDiem}" th:text="${diaDiem.tenDiaDiem}" th:selected="${diaDiem.maDiaDiem ==
+                xe.diaDiem.maDiaDiem}"></option>
+            </select>
+        </div>
+
+
+        <!-- Text input for TenXe -->
+        <div class="form-group">
+            <label for="tenXe">Tên Xe</label>
+            <input type="text" class="form-control" id="tenXe" th:field="*{tenXe}" required>
+            <div class="invalid-feedback">Tên xe là bắt buộc.</div>
+        </div>
+
+        <!-- Text input for NamSanXuat -->
+        <div class="form-group">
+            <label for="namSanXuat">Năm Sản Xuất</label>
+            <input type="text" class="form-control" id="namSanXuat" th:field="*{namSanXuat}">
+        </div>
+
+        <!-- Number input for GiaThue -->
+        <div class="form-group">
+            <label for="giaThue">Giá Thuê</label>
+            <input type="number" step="0.01" class="form-control" id="giaThue" th:field="*{giaThue}">
+        </div>
+
+        <!-- Text input for NhienLieu -->
+        <div class="form-group">
+            <label for="nhienLieu">Nhiên Liệu</label>
+            <input type="text" class="form-control" id="nhienLieu" th:field="*{nhienLieu}">
+        </div>
+
+        <!-- Text input for MaLuc_PhanKhoi -->
+        <div class="form-group">
+            <label for="lucPhanKhoi">Mã Lực/Phân Khối</label>
+            <input type="text" class="form-control" id="lucPhanKhoi" th:field="*{lucPhanKhoi}">
+        </div>
+
+        <!-- Textarea input for MoTa -->
+        <div class="form-group">
+            <label for="moTa">Mô Tả</label>
+            <textarea class="form-control" id="moTa" th:field="*{moTa}"></textarea>
+        </div>
+
+        <!-- Select dropdown for TrangThai -->
+        <div class="form-group">
+            <label for="trangThai">Trạng Thái</label>
+            <select class="form-control" id="trangThai" th:field="*{trangThai}">
+                <option value="true">Active</option>
+                <option value="false">Inactive</option>
+            </select>
+        </div>
+
+        <!-- Select dropdown for Hide -->
+        <div class="form-group">
+            <label for="hide">Hide</label>
+            <select class="form-control" id="hide" th:field="*{hide}">
+                <option value="true">Yes</option>
+                <option value="false">No</option>
+            </select>
+        </div>
+
+        <!-- Add or update image inputs -->
+        <div class="form-group">
+            <label for="imageFile1">Ảnh 1:</label>
+            <input type="file" class="form-control-file" id="imageFile1" name="imageFile1">
+            <img th:if="${xe.hinhAnh1}" th:src="@{/images/{fileName}(fileName=${xe.hinhAnh1})}" class="img-thumbnail mt-2" style="max-width: 200px;"/>
+        </div>
+
+        <div class="form-group">
+            <label for="imageFile2">Ảnh 2:</label>
+            <input type="file" class="form-control-file" id="imageFile2" name="imageFile2">
+            <img th:if="${xe.hinhAnh2}" th:src="@{/images/{fileName}(fileName=${xe.hinhAnh2})}" class="img-thumbnail mt-2" style="max-width: 200px;"/>
+        </div>
+
+        <div class="form-group">
+            <label for="imageFile3">Ảnh 3:</label>
+            <input type="file" class="form-control-file" id="imageFile3" name="imageFile3">
+            <img th:if="${xe.hinhAnh3}" th:src="@{/images/{fileName}(fileName=${xe.hinhAnh3})}" class="img-thumbnail mt-2" style="max-width: 200px;"/>
+        </div>
+
+        <div class="form-group">
+            <label for="imageFile4">Ảnh 4:</label>
+            <input type="file" class="form-control-file" id="imageFile4" name="imageFile4">
+            <img th:if="${xe.hinhAnh4}" th:src="@{/images/{fileName}(fileName=${xe.hinhAnh4})}" class="img-thumbnail mt-2" style="max-width: 200px;"/>
+        </div>
+
+        <!-- Submit and cancel buttons -->
+        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+        <a th:href="@{/xe/list}" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>
+</section>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết Khuyến mãi</title>
+    <style>
+        .detail-container {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .field-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<section layout:fragment="content">
+<div class="detail-container">
+    <h2>Chi tiết Khuyến mãi</h2>
+    <div class="detail-field">
+        <span class="field-label">Mã Khuyến mãi:</span>
+        <span th:text="${khuyenmai.maKhuyenMai}"></span>
+    </div>
+    <div class="detail-field">
+        <span class="field-label">Tên Khuyến mãi:</span>
+        <span th:text="${khuyenmai.tenKhuyenMai}"></span>
+    </div>
+    <div class="detail-field">
+        <span class="field-label">Code:</span>
+        <span th:text="${khuyenmai.code}"></span>
+    </div>
+    <div class="detail-field">
+        <span class="field-label">Nội dung Khuyến mãi:</span>
+        <span th:text="${khuyenmai.noiDungKhuyenMai}"></span>
+    </div>
+    <div class="detail-field">
+        <span class="field-label">Phần trăm Khuyến mãi:</span>
+        <span th:text="${khuyenmai.phanTramKhuyenMai}"></span>%
+    </div>
+    <div class="detail-field">
+        <span class="field-label">Hình ảnh Khuyến mãi:</span>
+        <img th:src="@{/images/{imageName}(imageName=${khuyenmai.hinhAnhKhuyenMai})}" class="img-fluid" alt="Hình ảnh khuyến mãi">
+    </div>
+
+    <div class="detail-field">
+        <span class="field-label">Ngày Khuyến mãi:</span>
+        <span th:text="${#temporals.format(khuyenmai.ngayKhuyenMai, 'dd-MM-yyyy')}"></span>
+    </div>
+    <div class="detail-field">
+        <span class="field-label">Ngày kết thúc:</span>
+        <span th:text="${#temporals.format(khuyenmai.ngayKetThuc, 'dd-MM-yyyy')}"></span>
+    </div>
+
+
+    <a href="/khuyenmai/list">Quay lại danh sách</a>
+</div>
+</section>
+</body>
+</html>

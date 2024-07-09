@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách xe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container mt-5">
+        <div th:if="${message}" class="alert alert-success" role="alert">
+            <span th:text="${message}"></span>
+        </div>
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <span th:text="${error}"></span>
+        </div>
+        <h2 class="mb-4">Danh sách xe</h2>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Biển số</th>
+                <th>Hãng</th>
+                <th>Loại</th>
+                <th>Địa điểm</th>
+                <th>Tên xe</th>
+                <th>Năm sản xuất</th>
+                <th>Giá </th>
+                <th>Nhiên liệu</th>
+                <th>Mã lực</th>
+                <th>Trạng thái<th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="xe : ${xeList}">
+                <td th:text="${xe.bienSoXe}"></td>
+                <td th:text="${xe.hangXe != null ? xe.hangXe.tenHang : 'N/A'}"></td>
+                <td th:text="${xe.loaiXe != null ? xe.loaiXe.tenLoai : 'N/A'}"></td>
+                <td th:text="${xe.diaDiem != null ? xe.diaDiem.tenDiaDiem : 'N/A'}"></td>
+                <td th:text="${xe.tenXe}"></td>
+                <td th:text="${xe.namSanXuat}"></td>
+                <td th:text="${xe.giaThue}"></td>
+                <td th:text="${xe.nhienLieu}"></td>
+                <td th:text="${xe.lucPhanKhoi}"></td>
+                <td th:text="${xe.trangThai ? 'Có sẵn' : 'Không có sẵn'}"></td>
+                <td>
+                    <!-- Display HinhAnh1 as an image -->
+                    <img th:src="@{/images/{imageName}(imageName=${xe.hinhAnh1})}" style="max-width: 100px; max-height: 100px;" alt="HinhAnh1">
+                </td>
+                <td>
+<!--                    <a th:href="@{'/xe/hide/' + ${xe.bienSoXe}}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa xe này?');">Xóa</a>-->
+                    <a th:href="@{'/xe/detail/' + ${xe.bienSoXe}}" class="btn btn-danger btn-sm">Chi tiết</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>
+
+

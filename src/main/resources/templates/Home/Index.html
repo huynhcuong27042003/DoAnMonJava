@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>JVMotorent</title>
+</head>
+
+<body>
+<section class="2xl:container" layout:fragment="content">
+    <div class="w-5/6 mx-auto">
+        <!--Banner-->
+        <div class="flex items-center justify-center w-full rounded-xl"
+             style="height: 600px; background-image: url(/images/banner.png);">
+            <div class="max-w-xl text-center">
+                <h1 class="font-medium text-white text-4xl/snug">
+                    BikeRent - Trang Web Cho Thuê Xe Tốt Nhất Khu Vực Miền Nam
+                </h1>
+                <!--Horizontal line-->
+                <div class="h-px mx-auto mt-3 bg-white w-96"></div>
+                <h6 class="mt-1 font-medium text-white text-2xl/9">
+                    Trải nghiệm sự khác biệt từ dịch vụ của chúng tôi
+                </h6>
+            </div>
+        </div>
+        <!--Search box-->
+        <form class="relative z-0 flex justify-center h-36 bottom-10">
+            <div class="flex items-center justify-between w-3/4 p-4 bg-white shadow-xl rounded-3xl h-28">
+                <!--Location-->
+                <div class="flex">
+                    <svg class="w-6 h-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 11c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M12 21l-8-9a9 9 0 1116 0l-8 9z" />
+                    </svg>
+                    <div class="block ml-2">
+                        <div class="mb-1 text-lg font-medium text-gray-500">Địa điểm</div>
+                        <div class="text-xl font-semibold text-black">Hồ Chí Minh</div>
+                    </div>
+                </div>
+                <!--Vertical line-->
+                <div class="w-px h-2/3 bg-slate-300"></div>
+                <!--Date and Time-->
+                <div class="flex">
+                    <svg class="w-6 h-8 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                         viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M8 7h8m0 0h3a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2h3m0 0V5a2 2 0 114 0v2z" />
+                    </svg>
+                    <div class="ml-2">
+                        <div class="mb-1 text-lg font-medium text-gray-500">Thời gian thuê</div>
+                        <input type="text"
+                               class="text-xl font-semibold text-black outline-none hover:cursor-pointer"
+                               id="rentalTime" onclick="openCalendarModal()" readonly>
+                    </div>
+                </div>
+                <input style="display: none;" type="date" id="startDateSearch">
+                <input style="display: none;" type="date" id="endDateSearch">
+                <!--Search Button-->
+                <button class="px-4 py-2 font-medium text-white bg-green-500 rounded-lg hover:bg-green-600 h-4/5">
+                    Tìm Xe
+                </button>
+            </div>
+        </form>
+        <!--Calendar Modal-->
+        <div class="fixed inset-0 flex items-center justify-center hidden bg-gray-800 bg-opacity-50"
+             id="calendarModal" onclick="handleBackdropClick(event)">
+            <div class="w-11/12 bg-white rounded-lg shadow-lg md:w-1/2 calendar-modal-content">
+                <div class="flex items-center justify-between p-4 border-b">
+                    <h2 class="mx-auto text-xl font-bold">Thời gian</h2>
+                    <button class="text-gray-500 hover:text-red-600" onclick="closeModal(event)">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="flex justify-between border-2 border-solid rounded-md">
+                        <!--Calendar for the current month-->
+                        <div id="currentMonth" class="w-1/2 calendar-container"></div>
+                        <!--Vertical line-->
+                        <div class="w-px mx-1 h-96 bg-slate-300"></div>
+                        <!--Calendar for the next month-->
+                        <div id="nextMonth" class="w-1/2 calendar-container"></div>
+                    </div>
+                </div>
+                <div class="flex justify-between p-4 border-t">
+                    <span id="selectedDates" class="mt-2 mr-4 font-semibold text-black"></span>
+                    <button class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
+                            onclick="closeModal(event)">
+                        Tiếp tục</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Vouchers-->
+    <h1 class="pt-10 mb-12 -mt-12 font-medium text-center text-5xl/snug">Chương trình khuyến mãi</h1>
+    <div class="flex items-center justify-center w-5/6 mx-auto mb-16">
+        <div class="relative w-full -z-10">
+            <div class="w-full overflow-hidden slider-container">
+                <div id="slider" class="slider-track ">
+                    <div class="p-2 slider-item"><img src="https://via.placeholder.com/200" alt="Image 1"
+                                                      class="rounded-lg" style="width: 410px; height: 275px;"></div>
+                    <div class="p-2 slider-item"><img src="https://via.placeholder.com/200" alt="Image 2"
+                                                      class="rounded-lg" style="width: 410px; height: 275px;"></div>
+                    <div class="p-2 slider-item"><img src="https://via.placeholder.com/200" alt="Image 3"
+                                                      class="rounded-lg" style="width: 410px; height: 275px;"></div>
+                    <div class="p-2 slider-item"><img src="https://via.placeholder.com/200" alt="Image 4"
+                                                      class="rounded-lg" style="width: 410px; height: 275px;"></div>
+                    <div class="p-2 slider-item"><img src="https://via.placeholder.com/200" alt="Image 5"
+                                                      class="rounded-lg" style="width: 410px; height: 275px;"></div>
+                    <div class="p-2 slider-item"><img src="https://via.placeholder.com/200" alt="Image 6"
+                                                      class="rounded-lg" style="width: 410px; height: 275px;"></div>
+                    <div class="p-2 slider-item"><img src="https://via.placeholder.com/200" alt="Image 7"
+                                                      class="rounded-lg" style="width: 410px; height: 275px;"></div>
+                    <div class="p-2 slider-item"><img src="https://via.placeholder.com/200" alt="Image 8"
+                                                      class="rounded-lg" style="width: 410px; height: 275px;"></div>
+                    <div class="p-2 slider-item"><img src="https://via.placeholder.com/200" alt="Image 9"
+                                                      class="rounded-lg" style="width: 410px; height: 275px;"></div>
+                </div>
+            </div>
+            <button id="prev"
+                    class="absolute w-12 p-2 text-black transform -translate-y-1/2 bg-gray-100 rounded-full h-14 -left-2 top-1/2 hover:bg-gray-200">&#10094;</button>
+            <button id="next"
+                    class="absolute w-12 p-2 text-black transform -translate-y-1/2 bg-gray-100 rounded-full -right-2 h-14 top-1/2 hover:bg-gray-200">&#10095;</button>
+        </div>
+    </div>
+    <!--Car container-->
+    <div class="ju w-full mx-auto bg-gray-100">
+        <h1 class="pt-10 mb-12 font-medium text-center text-5xl/snug">Xe Dành Cho Bạn</h1>
+        <div class=" w-4/5 mx-auto">
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <a th:each="xe : ${xeList}" th:href="@{/xeinfor/{id}(id=${xe.bienSoXe})}" class="mb-6 p-4 bg-white rounded-lg shadow-md">
+                    <!--Image-->
+                    <img class="w-full h-48 mb-3 rounded-md" th:src="@{/images/{imageName}(imageName=${xe.hinhAnh1})}" alt="Xe hình ảnh">
+                    <!--Card-->
+                    <div class="pt-4">
+                        <div class="flex items-center mb-2">
+                    <span class="px-2 py-1 text-xs text-gray-700 bg-gray-200 rounded">
+                        <span th:text="${xe.loaiXe.getTenLoai()}"></span>
+                    </span>
+                            <span class="px-2 py-1 mx-2 text-xs text-green-700 bg-green-200 rounded">
+                        Giao xe tận nơi
+                    </span>
+                        </div>
+                        <h3 class="mt-4 text-lg font-semibold text-gray-800" th:text="${xe.tenXe}"></h3>
+                        <p class="mt-1 text-sm text-gray-500" th:text="${xe.diaDiem.tenDiaDiem}"></p>
+                        <!--Horizontal line-->
+                        <div class="w-full h-px mx-auto my-3 bg-gray-200"></div>
+                        <div class="flex items-center justify-between mt-2">
+                            <div class="flex">
+                                <!--Star-->
+                                <svg class="w-5 h-5 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                            d="M10 15l-5.878 3.09 1.122-6.545-4.755-4.632 6.564-.955L10 0l2.947 5.958 6.564.955-4.755 4.632 1.122 6.545L10 15z">
+                                    </path>
+                                </svg>
+                                <span class="mr-2 text-sm text-gray-700">5.0</span>
+                                <!--Booking-->
+                                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 2a8 8 0 110 16 8 8 0 010-16zm1 11h-2v2h2v-2zm0-8h-2v6h2V5z" />
+                                </svg>
+                                <span class="text-sm text-gray-700">27 chuyến</span>
+                            </div>
+                            <span class="text-sm font-bold text-green-600" th:text="${xe.getGiaThue()}+ 'đ / ngày'">804K / ngày</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/advancedFormat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/isSameOrBefore.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/isSameOrAfter.js"></script>
+<!--Self-written JS-->
+<script src="/js/index/registerModal.js"></script>
+<script src="/js/index/loginModal.js"></script>
+<script src="/js/index/changeModal.js"></script>
+<script src="/js/index/getDays.js"></script>
+<script src="/js/index/calendar.js"></script>
+</html>

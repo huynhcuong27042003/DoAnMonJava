@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách khuyến mãi</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container mt-5">
+        <h2 class="mb-4">Danh sách khuyến mãi</h2>
+        <div th:if="${message}" class="alert alert-success" role="alert">
+            <span th:text="${message}"></span>
+        </div>
+        <div th:if="${error}" class="alert alert-danger" role="alert">
+            <span th:text="${error}"></span>
+        </div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Mã khuyến mãi</th>
+                <th>Tên khuyến mãi</th>
+                <th>Code</th>
+                <th>Nội dung</th>
+                <th>Phần trăm</th>
+                <th>Hình ảnh</th>
+                <th>Ngày bắt đầu</th>
+                <th>Ngày kết thúc</th>
+                <th>Hành động</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="khuyenMai : ${khuyenMaiList}">
+                <td th:text="${khuyenMai.maKhuyenMai}"></td>
+                <td th:text="${khuyenMai.tenKhuyenMai}"></td>
+                <td th:text="${khuyenMai.code}"></td>
+                <td th:text="${khuyenMai.noiDungKhuyenMai}"></td>
+                <td th:text="${khuyenMai.phanTramKhuyenMai + '%'}"></td>
+                <td>
+                    <img th:src="@{/images/{imageName}(imageName=${khuyenMai.hinhAnhKhuyenMai})}" style="max-width: 100px; max-height: 100px;" alt="HinhAnhKhuyenMai">
+                </td>
+                <td th:text="${#temporals.format(khuyenMai.ngayKhuyenMai, 'dd-MM-yyyy')}"></td>
+                <td th:text="${#temporals.format(khuyenMai.ngayKetThuc, 'dd-MM-yyyy')}"></td>
+                <td>
+                    <a th:href="@{'/khuyenmai/edit/' + ${khuyenMai.maKhuyenMai}}" class="btn btn-warning btn-sm">Sửa</a>
+                    <a th:href="@{'/khuyenmai/delete/' + ${khuyenMai.maKhuyenMai}}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa khuyến mãi này?');">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/khuyenmai/add" class="btn btn-primary">Thêm khuyến mãi mới</a>
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Layout with Tailwind CSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="/css/styles.css" rel="stylesheet">
+    <link href="/css/motprinfor.css" rel="stylesheet">
+</head>
+<body>
+<!--Motobike infomation-->
+<section class="mt-3 2xl:container" layout:fragment="content">
+    <!--Motobike images-->
+    <div class="flex justify-between w-5/6 mx-auto cursor-pointer">
+        <!--Main image-->
+        <div class="w-2/3 mr-5">
+            <img th:src="@{/images/{fileName}(fileName=${xe.hinhAnh1})}" alt="Main image" class="w-full rounded-xl"
+                 style="height: 624px;">
+        </div>
+        <!--Sub images-->
+        <div class="block w-1/3">
+            <img th:src="@{/images/{fileName}(fileName=${xe.hinhAnh2})}" alt="Sub image 1" class="w-full rounded-xl"
+                 style="height: 200px;">
+            <img th:src="@{/images/{fileName}(fileName=${xe.hinhAnh3})}" alt="Sub image 2" class="w-full my-3 rounded-xl"
+                 style="height: 200px;">
+            <img th:src="@{/images/{fileName}(fileName=${xe.hinhAnh4})}" alt="Sub image 3" class="w-full rounded-xl"
+                 style="height: 200px;">
+        </div>
+    </div>
+    <!--Motobike detail-->
+    <div class="flex w-4/5 mx-auto mt-8">
+        <div class="w-2/3 mr-5">
+            <h1 th:text="${xe.tenXe}" class="text-4xl font-semibold">HONDA CRV L 2023</h1>
+            <div class="flex my-4">
+                <!--Star-->
+                <svg class="w-5 h-5 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path
+                            d="M10 15l-5.878 3.09 1.122-6.545-4.755-4.632 6.564-.955L10 0l2.947 5.958 6.564.955-4.755 4.632 1.122 6.545L10 15z">
+                    </path>
+                </svg>
+                <span class="mr-2 text-gray-500 text-md">5.0</span>
+                <!--Bookings-->
+                <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2a8 8 0 110 16 8 8 0 010-16zm1 11h-2v2h2v-2zm0-8h-2v6h2V5z" />
+                </svg>
+                <span class="text-gray-500 text-md">27 chuyến</span>
+                <!--Vertical line-->
+                <div class="relative w-px h-4 mx-3 bg-black top-1"></div>
+                <!--Address-->
+                <span th:text="${xe.diaDiem.getTenDiaDiem()}" class="mr-2 text-gray-500 text-md">Quận Bình Thạnh, Thành phố Hồ Chí Minh</span>
+            </div>
+            <span th:text="${xe.loaiXe.getTenLoai()}" class="p-2 text-lg text-gray-700 bg-gray-200 rounded-lg shadow-md">
+                    Số tự động
+                </span>
+            <!--Horizontal line-->
+            <div class="w-full h-px my-5 bg-gray-200"></div>
+            <h5 class="text-2xl font-medium">Đặc điểm</h5>
+            <div class="flex justify-between mt-4">
+                <div class="flex items-center space-x-2">
+                    <i class="text-5xl ri-menu-fill"></i>
+                    <div>
+                        <p class="mb-1 text-base font-normal text-gray-700">Phân khối</p>
+                        <p th:text="${xe.LucPhanKhoi}" class="text-lg font-bold">110cc</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="text-5xl ri-motorbike-line"></i>
+                    <div>
+                        <p class="mb-1 text-base font-normal text-gray-700">Loại xe</p>
+                        <p th:text="'Xe '+${xe.loaiXe.getTenLoai()}" class="text-lg font-bold">Xe ga</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="text-5xl ri-oil-fill"></i>
+                    <div>
+                        <p class="mb-1 text-base font-normal text-gray-700">Nhiên liệu</p>
+                        <p th:text="${xe.nhienLieu}" class="text-lg font-bold">Xăng</p>
+                    </div>
+                </div>
+            </div>
+            <!--Horizontal line-->
+            <div class="w-full h-px my-5 bg-gray-200"></div>
+            <h5 class="text-2xl font-medium">Mô tả</h5>
+            <p th:text="${xe.moTa}" class="text-gray-400 whitespace-pre float-start">
+                Xe đời mới (2023)
+                Hiện đại, full vietmap
+                Hup vietmap dẫn đường
+                Youtube premium
+            </p>
+            <!--Horizontal line-->
+            <div class="w-full h-px my-3 bg-gray-200"></div>
+            <h5 class="mb-4 text-2xl font-medium">Chủ xe</h5>
+            <!--Info of owner-->
+            <div class="flex items-center space-x-2 text-lg">
+                <img class="rounded-full h-28 w-28" src="https://via.placeholder.com/200" alt="User avatar"
+                     loading="lazy">
+                <div class="block">
+                    <h1 th:text="${xe.taiKhoan.getTenNguoiDung()}" class="relative text-2xl font-semibold -top-4 -right-2">Nguyễn Quốc Huy</h1>
+                    <div class="flex">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             class="relative w-6 h-6 mr-1 text-yellow-500 -bottom-1" viewBox="0 0 20 20"
+                             fill="currentColor">
+                            <path
+                                    d="M9.049 2.927C9.3 2.343 9.953 2 10.667 2c.715 0 1.368.343 1.618.927l1.636 3.312 3.644.53c.793.116 1.107 1.083.535 1.64l-2.634 2.57.621 3.62c.141.82-.722 1.441-1.45 1.056l-3.252-1.709-3.253 1.709c-.727.385-1.591-.236-1.45-1.056l.622-3.62-2.635-2.57c-.572-.557-.258-1.524.535-1.64l3.644-.53 1.636-3.312z" />
+                        </svg>
+                        <span class="font-semibold">5.0</span>
+                        <span class="mx-3 text-gray-600">·</span>
+                        <span class="text-gray-600">1 đánh giá</span>
+                    </div>
+                </div>
+            </div>
+            <!--Review part-->
+            <div class="w-full p-4 mx-auto mt-10 rounded-lg shadow-lg">
+                <div class="flex items-center p-4 mt-4 space-x-4 border rounded-lg">
+                    <img class="w-12 h-12 rounded-full" src="https://via.placeholder.com/150" alt="User avatar">
+                    <div class="flex-grow">
+                        <p class="text-lg font-semibold">Nguyen Hoang Vinh</p>
+                        <div class="flex items-center mt-1">
+                            <!--Stars-->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-500"
+                                 viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                        d="M9.049 2.927C9.3 2.343 9.953 2 10.667 2c.715 0 1.368.343 1.618.927l1.636 3.312 3.644.53c.793.116 1.107 1.083.535 1.64l-2.634 2.57.621 3.62c.141.82-.722 1.441-1.45 1.056l-3.252-1.709-3.253 1.709c-.727.385-1.591-.236-1.45-1.056l.622-3.62-2.635-2.57c-.572-.557-.258-1.524.535-1.64l3.644-.53 1.636-3.312z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-500"
+                                 viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                        d="M9.049 2.927C9.3 2.343 9.953 2 10.667 2c.715 0 1.368.343 1.618.927l1.636 3.312 3.644.53c.793.116 1.107 1.083.535 1.64l-2.634 2.57.621 3.62c.141.82-.722 1.441-1.45 1.056l-3.252-1.709-3.253 1.709c-.727.385-1.591-.236-1.45-1.056l.622-3.62-2.635-2.57c-.572-.557-.258-1.524.535-1.64l3.644-.53 1.636-3.312z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-500"
+                                 viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                        d="M9.049 2.927C9.3 2.343 9.953 2 10.667 2c.715 0 1.368.343 1.618.927l1.636 3.312 3.644.53c.793.116 1.107 1.083.535 1.64l-2.634 2.57.621 3.62c.141.82-.722 1.441-1.45 1.056l-3.252-1.709-3.253 1.709c-.727.385-1.591-.236-1.45-1.056l.622-3.62-2.635-2.57c-.572-.557-.258-1.524.535-1.64l3.644-.53 1.636-3.312z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-500"
+                                 viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                        d="M9.049 2.927C9.3 2.343 9.953 2 10.667 2c.715 0 1.368.343 1.618.927l1.636 3.312 3.644.53c.793.116 1.107 1.083.535 1.64l-2.634 2.57.621 3.62c.141.82-.722 1.441-1.45 1.056l-3.252-1.709-3.253 1.709c-.727.385-1.591-.236-1.45-1.056l.622-3.62-2.635-2.57c-.572-.557-.258-1.524.535-1.64l3.644-.53 1.636-3.312z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-yellow-500"
+                                 viewBox="0 0 20 20" fill="currentColor">
+                                <path
+                                        d="M9.049 2.927C9.3 2.343 9.953 2 10.667 2c.715 0 1.368.343 1.618.927l1.636 3.312 3.644.53c.793.116 1.107 1.083.535 1.64l-2.634 2.57.621 3.62c.141.82-.722 1.441-1.45 1.056l-3.252-1.709-3.253 1.709c-.727.385-1.591-.236-1.45-1.056l.622-3.62-2.635-2.57c-.572-.557-.258-1.524.535-1.64l3.644-.53 1.636-3.312z" />
+                            </svg>
+                        </div>
+                        <!--Comment-->
+                        <p class="py-2">Chất lượng dịch vụ rất là tốt</p>
+                    </div>
+                    <!--Created at-->
+                    <div class="text-gray-600">
+                        16/05/2024
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block w-1/3">
+            <form th:action="@{/xeinfor/rentmotor}" method="post">
+                <h1 th:text="${xe.giaThue}+'đ/ngày'" class="text-4xl font-semibold">1454K /ngày</h1>
+                <input th:value="*{xe.bienSoXe}" name="bienSoXe" type="hidden">
+                <div class="flex justify-around mt-4 border-2 border-gray-300 rounded-lg shadow-md">
+                    <!--Vehicle handing-->
+                    <div class="w-1/2 cursor-pointer" onclick="openCalendarModal()" id="carBooking">
+                        <h6 class="mt-2 ml-3 text-sm">Nhận xe</h6>
+                        <div class="flex justify-between my-3 ml-3">
+                            <input type="text" class="text-base font-semibold outline-none cursor-pointer text-start" id="startDate" onchange="updateDateFromText('startDate', 'ngayNhan')">
+
+                        </div>
+                    </div>
+                    <!--Receive car-->
+                    <div class="w-1/2 border-l-2 border-gray-200 cursor-pointer" onclick="openCalendarModal()">
+                        <h6 class="mt-2 ml-3 text-sm text-start">Trả xe</h6>
+                        <div class="flex justify-between my-3 ml-3">
+                            <input type="text" class="text-base font-medium outline-none cursor-pointer text-start" id="endDate" onchange="updateDateFromText('endDate', 'ngayTra')" style="width: 160px;">
+                        </div>
+                    </div>
+                </div>
+                <input style="display: none" type="date" name="ngayNhan" id="startDateCalendar">
+                <input style="display: none" type="date" name="ngayTra" id="endDateCalendar">
+                <div class="mt-3 border-2 border-solid rounded-lg shadow-md">
+                    <h6 class="mt-2 ml-3 text-base">Địa chỉ giao nhận xe</h6>
+                    <h4 class="mt-2 mb-2 ml-3 text-lg font-medium">Quận Bình Thạnh, TP.Hồ Chí Minh</h4>
+                </div>
+                <!--Price-->
+                <div class="flex justify-between mt-4 space-x-4">
+                    <p class="text-base font-semibold text-gray-400">Đơn giá thuê:</p>
+                    <div class="mx-0 text-base font-bold text-black">
+                        <span th:text="${xe.giaThue}+'đ'" id="rentalPrice">1436K</span>
+                        <span>*</span>
+                        <span id="totalDates">1</span>
+                        <span>Ngày</span>
+                    </div>
+                </div>
+                <!--Deposit-->
+                <div class="flex justify-between mt-4 space-x-4">
+                    <p class="text-base font-semibold text-gray-400">Tiền cọc:</p>
+                    <div class="mx-0 text-base font-bold text-black">
+                        <span id="depositPrice" >0đ</span>
+                    </div>
+                </div>
+                <!--Rest total-->
+                <div class="flex justify-between mt-4 space-x-4">
+                    <p class="text-base font-semibold text-gray-400">Số tiền còn lại:</p>
+                    <div class="mx-0 text-base font-bold text-black">
+                        <span id="restTotalPrice" >0đ</span>
+                    </div>
+                </div>
+                <!--Discount-->
+                <div class="flex mt-4 space-x-4">
+                    <label class="mt-2 text-base font-semibold text-gray-400 whitespace-nowrap" for="discount">Mã giảm giá: </label>
+                    <input  class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow-md outline-none appearance-none"
+                            id="discount" type="text" placeholder="Nhập mã giảm giá" >
+                    <button type="button" class="btn btn-blue" id="applyDiscountBtn" onclick="applyDiscount()">Áp dụng</button>
+                    <span id="couponMessage"></span>
+                </div>
+                <!--Total-->
+                <div class="flex justify-between mt-4 space-x-4">
+                    <p class="text-base font-bold">Thành tiền:</p>
+                    <div class="mx-0 text-base font-bold text-black">
+                        <span id="totalPrice"></span>
+                    </div>
+                </div>
+                <button type="submit"  class="w-full mt-3 bg-green-300 rounded-lg h-11 hover:bg-green-400"
+                        onclick="checkDates(event)">Chọn thuê</button>
+            </form>
+            <!--Calendar modal-->
+            <div class="fixed inset-0 flex items-center justify-center hidden bg-gray-800 bg-opacity-50"
+                 id="calendarModal" onclick="handleBackdropClick(event)">
+                <div class="w-11/12 bg-white rounded-lg shadow-lg md:w-1/2 calendar-modal-content">
+                    <div class="flex items-center justify-between p-4 border-b">
+                        <h2 class="mx-auto text-xl font-bold">Thời gian</h2>
+                        <button class="text-gray-500 hover:text-red-600" onclick="closeModal()">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="flex justify-between border-2 border-solid rounded-md">
+                            <!--Calendar for the current month-->
+                            <div id="currentMonth" class="w-1/2 calendar-container"></div>
+                            <!--Vertical line-->
+                            <div class="w-px mx-1 h-96 bg-slate-300"></div>
+                            <!--Calendar for the next month-->
+                            <div id="nextMonth" class="w-1/2 calendar-container"></div>
+                        </div>
+                        <!--Time Selection-->
+
+                    </div>
+                    <div class="flex justify-between p-4 border-t">
+                        <span id="selectedDates" class="mt-1 mr-4 font-semibold text-black"></span>
+                        <button class="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
+                                onclick="closeModal()">Tiếp
+                            tục</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/advancedFormat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/isSameOrBefore.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/isSameOrAfter.js"></script>
+<!--Self-written JS-->
+<script src="/js/index/calendar.js"></script>
+<script src="/js/xeinfor/parseDate.js"></script>

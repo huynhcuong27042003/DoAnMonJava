@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <title>Phương Thức Thanh Toán</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Danh sách phương thức thanh toán</h2>
+    <section layout:fragment="content">
+        <!-- Dynamic content goes here -->
+        <div class="container mt-5">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Mã</th>
+                    <th>Tên Phương Thức</th>
+                    <th>Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="phuongThucThanhToan : ${phuongthucthanhtoan}">
+                    <td th:text="${phuongThucThanhToan.maPhuongThuc}">1</td>
+                    <td th:text="${phuongThucThanhToan.tenPhuongThuc}">Tiền mặt</td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" th:href="@{/phuongthucthanhtoan/edit/{id}(id=${phuongThucThanhToan.maPhuongThuc})}">Sửa</a>
+                        <a class="btn btn-danger btn-sm" th:href="@{/phuongthucthanhtoan/delete/{id}(id=${phuongThucThanhToan.maPhuongThuc})}">Xóa</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-success" th:href="@{/phuongthucthanhtoan/add}">Thêm mới</a>
+
+        </div>
+    </section>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

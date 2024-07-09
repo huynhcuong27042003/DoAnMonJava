@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Vehicle Brand</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="container mt-4">
+    <h2>Edit Vehicle Brand</h2>
+    <form th:action="@{/hangxe/edit/{id}(id=${hangXe.maHangXe})}" th:object="${hangXe}" method="post">
+        <input type="hidden" th:field="*{maHangXe}">
+        <div class="form-group">
+            <label for="tenHang">Hãng</label>
+            <input type="text" class="form-control" id="tenHang" th:field="*{tenHang}" placeholder="Nhập tên hãng">
+            <small th:if="${#fields.hasErrors('tenHang')}" th:errors="*{tenHang}" class="text-danger"></small>
+        </div>
+        <button type="submit" class="btn btn-primary">Cập nhật</button>
+        <a href="/hangxe/list" class="btn btn-secondary">Hủy</a>
+    </form>
+</div>
+</section>
+</body>
+</html>

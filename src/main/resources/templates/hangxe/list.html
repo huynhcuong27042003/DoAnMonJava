@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <meta charset="UTF-8">
+    <title>Vehicle Brands List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+<body>
+<section layout:fragment="content">
+    <div class="container mt-4">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Mã</th>
+                <th scope="col">Hãng xe</th>
+                <th scope="col">Thao tác</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Iterate over the list of HangXe -->
+            <tr th:each="hangXe : ${hangXes}">
+                <td th:text="${hangXe.maHangXe}"></td>
+                <td th:text="${hangXe.tenHang}"></td>
+                <td>
+                    <a th:href="@{/hangxe/edit/{id}(id=${hangXe.maHangXe})}" class="btn btn-primary btn-sm">Chỉnh sửa</a>
+                    <a th:href="@{/hangxe/delete/{id}(id=${hangXe.maHangXe})}" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/hangxe/add" class="btn btn-success">Thêm</a>
+    </div>
+</section>
+
+</body>
+</html>

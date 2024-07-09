@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"
+            integrity="sha512-Tn2m0TIpgVyTzzvmxLNuqbSJH3JP8jm+Cy3hvHrW7ndTDcJ1w5mBiksqDBb8GpE2ksktFvDB/ykZ0mDpsZj20w=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+          integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+          crossorigin="anonymous" />
+    <title>Thêm Xe</title>
+</head>
+<body>
+<section class="2xl:container" layout:fragment="content">
+    <div class="w-5/6 mx-auto">
+        <h1 class="mb-6 text-2xl font-bold text-center text-gray-700">Thêm xe</h1>
+        <form th:action="@{/addbyuser}" method="post" enctype="multipart/form-data" th:object="${xe}" class="w-1/2 mx-auto">
+            <!-- Bind Biển số xe -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="bienSoXe" class="block font-medium text-gray-700 text-nowrap">Biển số xe</label>
+                <input th:field="*{bienSoXe}" class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="BienSoXe" type="text" placeholder="Biển số xe">
+            </div>
+            <!-- Bind Địa điểm -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="MaDiaDiem" class="block font-medium text-gray-700 text-nowrap">Địa điểm</label>
+                <select th:field="*{diaDiem.maDiaDiem}" id="MaDiaDiem" class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none">
+                    <option th:each="diaDiem : ${diadiem}" th:value="${diaDiem.maDiaDiem}" th:text="${diaDiem.tenDiaDiem}">Quận 1</option>
+                </select>
+            </div>
+            <!-- Bind Hãng xe -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="MaHangXe" class="block font-medium text-gray-700 text-nowrap">Hãng xe</label>
+                <select th:field="*{hangXe.maHangXe}" id="MaHangXe" class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none">
+                    <option th:each="hangXe : ${hangxe}" th:value="${hangXe.maHangXe}" th:text="${hangXe.tenHang}">Honda</option>
+                </select>
+            </div>
+            <!-- Bind Loại xe -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="MaLoai" class="block font-medium text-gray-700 text-nowrap">Loại xe</label>
+                <select th:field="*{loaiXe.maLoai}" id="MaLoai"  class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none">
+                    <option th:each="loaiXe : ${loaixe}" th:value="${loaiXe.maLoai}" th:text="${loaiXe.tenLoai}">Xe số</option>
+                </select>
+            </div>
+            <!-- Bind Tên xe -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="tenXe" class="block font-medium text-gray-700 text-nowrap">Tên xe</label>
+                <input th:field="*{tenXe}" class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="tenXe" type="text" placeholder="Tên xe">
+            </div>
+
+            <!-- Bind Năm sản xuất -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="namSanXuat" class="block font-medium text-gray-700 text-nowrap">Năm sản xuất</label>
+                <input th:field="*{namSanXuat}" class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="namSanXuat" type="text" placeholder="Năm sản xuất">
+            </div>
+            <!-- Bind Giá thuê xe -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="giaThue" class="block font-medium text-gray-700 text-nowrap">Giá thuê xe</label>
+                <input th:field="*{giaThue}" class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="giaThue" type="text" placeholder="Giá thuê xe">
+            </div>
+            <!-- Bind Nhiên liệu -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="nhienLieu" class="block font-medium text-gray-700 text-nowrap">Nhiên liệu</label>
+                <input th:field="*{nhienLieu}" class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="nhienLieu" type="text" placeholder="Nhiên liệu">
+            </div>
+            <!-- Bind Phân khối -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="lucPhanKhoi" class="block font-medium text-gray-700 text-nowrap">Phân khối</label>
+                <input th:field="*{lucPhanKhoi}" class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="lucPhanKhoi" type="text" placeholder="Phân khối">
+            </div>
+
+            <!-- Mô tả -->
+            <div class="flex items-center justify-between mb-4">
+                <label for="moTa" class="block font-medium text-gray-700 text-nowrap">Mô tả</label>
+                <textarea th:field="*{moTa}" class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                          id="moTa" rows="3" placeholder="Hãy nhập Mô tả"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="imageFile1">Image 1:</label>
+                <input type="file" id="imageFile1" name="imageFile1"/>
+            </div>
+
+            <div class="form-group">
+                <label for="imageFile2">Image 2:</label>
+                <input type="file" id="imageFile2" name="imageFile2"/>
+            </div>
+
+            <div class="form-group">
+                <label for="imageFile3">Image 3:</label>
+                <input type="file" id="imageFile3" name="imageFile3"/>
+            </div>
+
+            <div class="form-group">
+                <label for="imageFile4">Image 4:</label>
+                <input type="file" id="imageFile4" name="imageFile4"/>
+            </div>
+
+
+            <!-- Quay lại và nút thêm xe -->
+            <div class="flex items-center justify-between">
+                <a href="https://www.facebook.com/" class="text-blue-700 underline decoration-1">Quay lại</a>
+                <button type="submit" class="px-4 py-2 text-white bg-green-500 rounded-md shadow-md">
+                    Thêm xe
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>

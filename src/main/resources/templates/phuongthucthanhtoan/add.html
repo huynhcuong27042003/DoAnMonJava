@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}">
+<head>
+    <title>Thêm Phương Thức Thanh Toán</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="container mt-5">
+    <h2 class="mb-4">Thêm Phương Thức Thanh Toán</h2>
+    <form th:action="@{/phuongthucthanhtoan/add}" th:object="${phuongthucthanhtoan}" method="post">
+        <div class="form-group">
+            <label for="tenPhuongThuc">Tên Phương Thức:</label>
+            <input type="text" id="tenPhuongThuc" th:field="*{tenPhuongThuc}" class="form-control" placeholder="Nhập tên phương thức thanh toán" />
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+    </form>
+</div>
+</section>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

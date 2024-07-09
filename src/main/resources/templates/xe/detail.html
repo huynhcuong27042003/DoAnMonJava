@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Xe Detail</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<section layout:fragment="content">
+<div class="container mt-5">
+    <h2>Xe Detail</h2>
+
+    <div th:if="${xe}">
+        <div class="form-group">
+            <label for="bienSoXe">Biển Số Xe</label>
+            <input type="text" class="form-control" id="bienSoXe" th:value="${xe.bienSoXe}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="MaDiaDiem">Địa Điểm</label>
+            <input type="text" class="form-control" id="MaDiaDiem" th:value="${xe.diaDiem.tenDiaDiem}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="MaHangXe">Hãng Xe</label>
+            <input type="text" class="form-control" id="MaHangXe" th:value="${xe.hangXe.tenHang}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" th:value="${xe.taiKhoan.email}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="MaLoai">Loại Xe</label>
+            <input type="text" class="form-control" id="MaLoai" th:value="${xe.loaiXe.tenLoai}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="tenXe">Tên Xe</label>
+            <input type="text" class="form-control" id="tenXe" th:value="${xe.tenXe}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="namSanXuat">Năm Sản Xuất</label>
+            <input type="text" class="form-control" id="namSanXuat" th:value="${xe.namSanXuat}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="giaThue">Giá Thuê</label>
+            <input type="text" class="form-control" id="giaThue" th:value="${xe.giaThue}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="nhienLieu">Nhiên Liệu</label>
+            <input type="text" class="form-control" id="nhienLieu" th:value="${xe.nhienLieu}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="lucPhanKhoi">Mã Lực/Phân Khối</label>
+            <input type="text" class="form-control" id="lucPhanKhoi" th:value="${xe.lucPhanKhoi}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="moTa">Mô Tả</label>
+            <textarea class="form-control" id="moTa" readonly th:text="${xe.moTa}"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="trangThai">Trạng Thái</label>
+            <input type="text" class="form-control" id="trangThai" th:value="${xe.trangThai ? 'Active' : 'Inactive'}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label>Image 1:</label>
+            <img th:if="${xe.hinhAnh1}" th:src="@{/images/__${xe.hinhAnh1}__}" class="img-fluid" style="max-width: 300px;"/>
+            <span th:unless="${xe.hinhAnh1}">No image</span>
+        </div>
+
+        <div class="form-group">
+            <label>Image 2:</label>
+            <img th:if="${xe.hinhAnh2}" th:src="@{/images/__${xe.hinhAnh2}__}" class="img-fluid" style="max-width: 300px;"/>
+            <span th:unless="${xe.hinhAnh2}">No image</span>
+        </div>
+
+        <div class="form-group">
+            <label>Image 3:</label>
+            <img th:if="${xe.hinhAnh3}" th:src="@{/images/__${xe.hinhAnh3}__}" class="img-fluid" style="max-width: 300px;"/>
+            <span th:unless="${xe.hinhAnh3}">No image</span>
+        </div>
+
+        <div class="form-group">
+            <label for>Image 4:</label>
+            <img th:if="${xe.hinhAnh4}" th:src="@{/images/__${xe.hinhAnh4}__}" class="img-fluid" style="max-width: 300px;"/>
+            <span th:unless="${xe.hinhAnh4}">No image</span>
+        </div>
+
+        <a href="/xe" class="btn btn-secondary">Back</a>
+    </div>
+
+    <div th:unless="${xe}">
+        <p>Xe không tồn tại.</p>
+    </div>
+</div>
+</body>
+</html>

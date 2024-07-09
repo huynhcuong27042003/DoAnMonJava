@@ -1,0 +1,25 @@
+<!-- add.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm mới chức vụ</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Thêm mới chức vụ</h2>
+    <form th:action="@{/chucvu/add}" method="post" th:object="${chucVu}">
+        <div class="form-group">
+            <label for="tenChucVu">Tên chức vụ:</label>
+            <input type="text" class="form-control" id="tenChucVu" th:field="*{tenChucVu}" required>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('tenChucVu')}"
+                   th:errors="*{tenChucVu}">Tên chức vụ không được để trống.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Thêm</button>
+    </form>
+</div>
+</body>
+</html>
