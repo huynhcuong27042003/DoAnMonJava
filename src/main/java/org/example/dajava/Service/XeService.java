@@ -45,7 +45,10 @@ public class XeService {
         xe.setTrangThai(false);
         return xeRepository.save(xe);
     }
-
+    public Xe publicXe(Xe xe){
+        xe.setHide(false);
+        return xeRepository.save(xe);
+    }
     public Optional<Xe> getDetailXe(String bienSo) {
         return xeRepository.findById(bienSo);
     }
@@ -76,6 +79,7 @@ public class XeService {
         existingXe.setHide(false);
         xeRepository.save(existingXe);
     }
+
     public List<Xe> findAll() {
         return xeRepository.findAll();
     }

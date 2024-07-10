@@ -34,17 +34,32 @@ public class XeController {
     private final TaiKhoanService taiKhoanService;
     @Autowired
     private final HandleImage handleImage;
-
     @GetMapping("/list")
+    public String getAllNotHiddenXe(Model model) {
+        List<Xe> xeList = xeService.getAllNotHiddenXe();
+        model.addAttribute("xeList", xeList);
+        model.addAttribute("hangxe", hangXeService.getAllHangXe());
+        model.addAttribute("loaixe", loaiXeService.getAllLoaiXe());
+        model.addAttribute("diadiem", diaDiemService.getAllDiaDiem());
+        return "xe/list";
+    }
+    @GetMapping("/list-hide")
     public String getAllHiddenXe(Model model) {
         List<Xe> xeList = xeService.getAllHiddenXe();
         model.addAttribute("xeList", xeList);
         model.addAttribute("hangxe", hangXeService.getAllHangXe());
         model.addAttribute("loaixe", loaiXeService.getAllLoaiXe());
         model.addAttribute("diadiem", diaDiemService.getAllDiaDiem());
-        return "xe/list"; // Return the view for displaying all hidden Xe
+        return "xe/list-hide"; // Return the view for displaying all hidden Xe
     }
-
+    @PostMapping("/acceptxe/{id}")
+    public String acceptXe(@PathVariable String id) {
+        Xe xeexsiting = xeService.findXeByBienSoXe(id);
+        if (xeexsiting != null) {
+            xeService.publicXe(xeexsiting);
+        }
+        return "redirect:/xe/list-hide";
+    }
     @GetMapping("/add")
     public String addXeForm(Model model) {
         model.addAttribute("xe", new Xe());

@@ -8,9 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import java.util.Collection;
 
 @Configuration // Đánh dấu lớp này là một lớp cấu hình cho Spring Context.
 @EnableWebSecurity // Kích hoạt tính năng bảo mật web của Spring Security.
@@ -36,12 +39,12 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(@NotNull HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/","/images/**","/register","/login", "/error","/forgot-password","/reset-password")
+                        .requestMatchers("/css/**", "/js/**", "/","/images/**","/register","/login", "/error","/forgot-password","/reset-password","/xeinfor/**","/payment/**")
                         .permitAll()
                         // Cho phép truy cập không cần xác thực.
                         .requestMatchers("/diadiem/**","/hangxe/**","/khuyenmai/**","/loaixe/**")
                         .hasAnyAuthority("ADMIN") // Chỉ cho phép ADMIN truy cập.
-                        .requestMatchers("/xeinfor/**","/infor/**","/checkorder/**","/xe/addbyuser")
+                        .requestMatchers("/infor/**","/checkorder/**","/xe/addbyuser")
                         .hasAnyAuthority("USER")
 
                         .requestMatchers("/api/**")
@@ -64,6 +67,16 @@ public class SecurityConfig{
                         .failureUrl("/?error=true")
                         .usernameParameter("email") // Tên trường tùy chỉnh
                         .passwordParameter("MatKhau")
+                        .successHandler((request, response, authentication) -> {
+                            // Lấy danh sách các vai trò của người dùng đã đăng nhập
+                            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+                            for (GrantedAuthority authority : authorities) {
+                                if (authority.getAuthority().equals("ADMIN")) {
+                                    // Nếu là ADMIN, chuyển hướng đến /xe/list
+                                    response.sendRedirect("/xe/list");
+                                }
+                            }
+                        })
                         .permitAll()
                 )
 

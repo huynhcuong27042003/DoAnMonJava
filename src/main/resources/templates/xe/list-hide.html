@@ -27,10 +27,7 @@
                 <th>Loại</th>
                 <th>Địa điểm</th>
                 <th>Tên xe</th>
-                <th>Năm sản xuất</th>
                 <th>Giá </th>
-                <th>Nhiên liệu</th>
-                <th>Mã lực</th>
                 <th>Hình ảnh<th>
             </tr>
             </thead>
@@ -41,23 +38,23 @@
                 <td th:text="${xe.loaiXe != null ? xe.loaiXe.tenLoai : 'N/A'}"></td>
                 <td th:text="${xe.diaDiem != null ? xe.diaDiem.tenDiaDiem : 'N/A'}"></td>
                 <td th:text="${xe.tenXe}"></td>
-                <td th:text="${xe.namSanXuat}"></td>
                 <td th:text="${xe.giaThue}"></td>
-                <td th:text="${xe.nhienLieu}"></td>
-                <td th:text="${xe.lucPhanKhoi}"></td>
                 <!--<td th:text="${xe.trangThai ? 'Có sẵn' : 'Không có sẵn'}"></td>-->
                 <td>
                     <!-- Display HinhAnh1 as an image -->
                     <img th:src="@{/images/{imageName}(imageName=${xe.hinhAnh1})}" style="max-width: 100px; max-height: 100px;" alt="HinhAnh1">
                 </td>
                 <td>
-<!--                    <a th:href="@{'/xe/hide/' + ${xe.bienSoXe}}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa xe này?');">Xóa</a>-->
+                    <!--                    <a th:href="@{'/xe/hide/' + ${xe.bienSoXe}}" class="btn btn-success btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa xe này?');">Xóa</a>-->
+
+                    <form th:action="@{'/xe/acceptxe/' + ${xe.bienSoXe}}" method="post" class="inline-block">
+                        <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Bạn có chắc chắn muốn đăng xe này?');">Đăng xe lên</button>
+                    </form>
                     <a th:href="@{'/xe/detail/' + ${xe.bienSoXe}}" class="btn btn-danger btn-sm">Chi tiết</a>
                 </td>
             </tr>
             </tbody>
         </table>
-        <a href="/xe/list-hide" class="btn btn-success float-right">Danh sách xe yêu cầu</a>
     </div>
 </section>
 </body>

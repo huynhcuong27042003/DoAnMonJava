@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{LayoutAdmin}"v>
 <head>
     <title>Xe Detail</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -7,7 +10,7 @@
 <body>
 <section layout:fragment="content">
 <div class="container mt-5">
-    <h2>Xe Detail</h2>
+    <h1>Cho tiết xe</h1>
 
     <div th:if="${xe}">
         <div class="form-group">
@@ -65,10 +68,7 @@
             <textarea class="form-control" id="moTa" readonly th:text="${xe.moTa}"></textarea>
         </div>
 
-        <div class="form-group">
-            <label for="trangThai">Trạng Thái</label>
-            <input type="text" class="form-control" id="trangThai" th:value="${xe.trangThai ? 'Active' : 'Inactive'}" readonly>
-        </div>
+
 
         <div class="form-group">
             <label>Image 1:</label>

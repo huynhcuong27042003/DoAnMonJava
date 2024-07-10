@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security5"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    <title>JVMotorent</title>
+</head>
+
+<body>
+<section class="2xl:container" layout:fragment="content">
+    <div class="w-5/6 mx-auto mb-16">
+        <h1 class="mb-6 text-2xl font-bold text-center text-gray-700">Yêu cầu thuê xe</h1>
+        <div class="w-1/2 mx-auto">
+            <div class="flex items-center justify-between mb-4">
+                <label for="carId" class="block font-medium text-gray-700 text-nowrap">Biển số xe</label>
+                <input th:value="${datXe.xe.bienSoXe}" readonly
+                       class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="carId" type="text" placeholder="Biển số xe">
+            </div>
+            <div class="flex items-center justify-between mb-4">
+                <label for="name" class="block font-medium text-gray-700 text-nowrap">Tên xe</label>
+                <input  readonly
+                       class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="name" type="text" placeholder="Tên xe">
+            </div>
+            <div class="flex items-center justify-between mb-4">
+                <label for="email" class="block font-medium text-gray-700 text-nowrap">Email</label>
+                <input  readonly
+                       class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="email" type="text" placeholder="Email">
+            </div>
+            <div class="flex items-center justify-between mb-4">
+                <label for="ngayStart" class="block font-medium text-gray-700 text-nowrap">Ngày Nhận</label>
+                <input readonly
+                       class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="ngayStart" type="text" placeholder="Ngày Nhận">
+            </div>
+            <div class="flex items-center justify-between mb-4">
+                <label for="ngayEnd" class="block font-medium text-gray-700 text-nowrap">Ngày trả</label>
+                <input  readonly
+                       class="w-5/6 px-3 py-2 leading-tight text-gray-700 border rounded shadow outline-none appearance-none"
+                       id="ngayEnd" type="text" placeholder="Ngày Trả">
+            </div>
+            <form  method="post" class="inline-block">
+                <button  class="px-4 py-2 text-white bg-green-500 rounded-md shadow-md">
+                    Chấp nhận
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/advancedFormat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/isSameOrBefore.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/isSameOrAfter.js"></script>
+<!--Self-written JS-->
+</html>

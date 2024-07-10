@@ -28,7 +28,7 @@
             <img src="/images/logo_new.png" class="h-full" loading="lazy" alt="Web đặt xe của tui">
         </a>
         <!--Options-->
-        <div sec:authorize="isAuthenticated()" class="relative flex items-center justify-between w-3/5">
+        <div sec:authorize="isAuthenticated()" class="relative flex items-center justify-between w-3/6">
             <a th:href="@{/addbyuser}" class="mx-2 text-lg font-normal">Trở thành chủ xe</a>
             <!--Vertical line-->
             <div class="w-px h-6 mx-4 bg-slate-300"></div>
@@ -57,11 +57,21 @@
                     <div class="w-full h-px my-1 bg-gray-200"></div>
                 </ul>
                 <p class="p-4 font-medium text-center bg-slate-100" th:if="${yeuCauDatXeList.isEmpty()}">Không có thông báo nào</p>
+
             </div>
 
-            <img src="https://via.placeholder.com/200" class="rounded-full cursor-pointer"
+            <img th:if="${tk.Avarta != null}"
+                 th:src="@{/images/{imageName}(imageName=${tk.Avarta})}"
+                 class="rounded-full cursor-pointer"
+                 style="height: 40px; width: 40px;">
+
+            <!-- Thẻ <img> khi không có avatar -->
+            <img th:if="${tk.Avarta == null}"
+                 th:src="@{/images/avatar-default.png}"
+                 class="rounded-full cursor-pointer"
                  style="height: 40px; width: 40px;">
             <div sec:authorize="isAuthenticated()">
+
                 <div class="relative inline-block text-left">
                     <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
                             class="inline-flex items-center px-5 text-lg font-normal text-center bg-white rounded-lg text-nowrap"
@@ -127,7 +137,7 @@
         <div class="flex justify-center mt-4">
             <h2 class="mb-4 text-2xl font-medium">Đăng ký</h2>
         </div>
-        <form th:action="@{/register}"  method="post" onsubmit="return validatePasswords()">
+        <form th:action="@{/register}" method="post" onsubmit="return validatePasswords()">
             <div class="mb-4">
                 <label class="block mb-2 text-sm font-bold text-gray-400" for="registerEmail">Email</label>
                 <input class="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none"
@@ -312,7 +322,6 @@
     }
 
     var discountElement = document.getElementById('discount');
-
     discountElement.addEventListener('input', convertToUpperCase);
     discountElement.addEventListener('change', convertToUpperCase);
 
@@ -321,10 +330,14 @@
         var number = priceString.replace(/\D/g, '');
         return parseInt(number, 10); // Chuyển đổi chuỗi kết quả thành số nguyên
     }
+
     async function applyDiscount() {
         const discountCode = document.getElementById('discount').value;
         const couponMessage = document.getElementById('couponMessage');
         const totalPriceElement = document.getElementById('totalPrice');
+        const depositPriceElement = document.getElementById('depositPrice');
+        const restTotalPriceElement = document.getElementById('restTotalPrice');
+        const applyDiscountBtn = document.getElementById('applyDiscountBtn');
 
         try {
             // Gọi API để xác thực mã giảm giá
@@ -334,15 +347,21 @@
             if (result.isValid) {
                 // Tính toán lại giá tiền sau khi áp dụng giảm giá
                 const discountPercentage = result.discountPercentage;
-                const originnalPrice = document.getElementById('totalPrice');
-                const originalPrice = extractNumber(originnalPrice .textContent);
+                const originalPrice = extractNumber(totalPriceElement.textContent);
                 const discountedPrice = originalPrice - (originalPrice * (discountPercentage / 100));
 
-                // Cập nhật giá tiền trong giao diện người dùng
-                totalPriceElement.textContent = `${discountedPrice}đ`;
+                // Tính tiền cọc và số tiền còn lại sau khi giảm giá
+                const depositPrice = discountedPrice * 0.2;
+                const restTotalPrice = discountedPrice - depositPrice;
+
+                // Cập nhật giá trị trong giao diện người dùng
+                depositPriceElement.textContent = `${depositPrice.toLocaleString()}đ`;
+                restTotalPriceElement.textContent = `${restTotalPrice.toLocaleString()}đ`;
+                totalPriceElement.textContent = `${discountedPrice.toLocaleString()}đ`;
                 couponMessage.textContent = "Áp dụng mã giảm giá thành công!";
                 couponMessage.style.color = "green";
-                const applyDiscountBtn = document.getElementById('applyDiscountBtn');
+
+                // Vô hiệu hóa nút áp dụng mã giảm giá sau khi đã áp dụng
                 applyDiscountBtn.disabled = true;
             } else {
                 couponMessage.textContent = result.message;

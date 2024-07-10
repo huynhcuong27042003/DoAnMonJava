@@ -54,7 +54,6 @@ public class IndexController {
             model.addAttribute("email", email);
             TaiKhoan tk = taikhoanService.findTKByEmail(email);
             model.addAttribute("tk", tk);
-
             List<YeuCauDatXe> yeuCauDatXe = yeuCauDatXeService.findYCByEmail(email);
             model.addAttribute("yeuCauDatXeList", yeuCauDatXe);
         }

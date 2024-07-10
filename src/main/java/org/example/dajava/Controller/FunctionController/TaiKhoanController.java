@@ -43,6 +43,8 @@ public class TaiKhoanController {
     public String changePassword(@PathVariable String id, Model model) {
         TaiKhoan tk = taiKhoanService.findTKByEmail(id);
         model.addAttribute("tk", tk);
+        List<YeuCauDatXe> yeuCauDatXe = yeucauDatXeService.findYCByEmail(id);
+        model.addAttribute("yeuCauDatXeList", yeuCauDatXe);
         return "Function/changepassword";
     }
     @PostMapping("/update/{id}")

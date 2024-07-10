@@ -81,5 +81,16 @@ public class RentMotorController{
         }
         return "redirect:/";
     }
-
+    @GetMapping("/payment")
+    public String payment(@AuthenticationPrincipal UserDetails userDetails,Model model, RedirectAttributes redirectAttributes) {
+        if (userDetails != null) {
+            String email = userDetails.getUsername(); // Lấy email từ UserDetails
+            model.addAttribute("email", email);
+            TaiKhoan tk = taikhoanService.findTKByEmail(email);
+            model.addAttribute("tk", tk);
+            List<YeuCauDatXe> yeuCauDatXe = yeuCauDatXeService.findYCByEmail(email);
+            model.addAttribute("yeuCauDatXeList", yeuCauDatXe);
+        }
+        return "Function/payment";
+    }
 }
