@@ -70,11 +70,18 @@ public class SecurityConfig{
                         .successHandler((request, response, authentication) -> {
                             // Lấy danh sách các vai trò của người dùng đã đăng nhập
                             Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+                            boolean isAdmin = false;
                             for (GrantedAuthority authority : authorities) {
                                 if (authority.getAuthority().equals("ADMIN")) {
                                     // Nếu là ADMIN, chuyển hướng đến /xe/list
                                     response.sendRedirect("/xe/list");
+                                    isAdmin = true;
+                                    break;
                                 }
+                            }
+                            if (!isAdmin) {
+                                // Nếu không phải là ADMIN, chuyển hướng về trang chính
+                                response.sendRedirect("/");
                             }
                         })
                         .permitAll()

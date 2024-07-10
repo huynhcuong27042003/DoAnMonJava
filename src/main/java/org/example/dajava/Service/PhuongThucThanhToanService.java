@@ -27,6 +27,10 @@ public class PhuongThucThanhToanService {
         return phuongThucThanhToanRepository.findById(id);
     }
 
+    public PhuongThucThanhToan findPTById(Integer id) {
+        return phuongThucThanhToanRepository.findByMaPhuongThuc(id);
+    }
+
     public PhuongThucThanhToan createThanhToan(PhuongThucThanhToan phuongThucThanhToan) {
         return phuongThucThanhToanRepository.save(phuongThucThanhToan);
     }

@@ -374,4 +374,49 @@
         }
     }
 </script>
+<script>
+    // Function to open the modal
+    function openModal() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+        if (startDate && endDate) {
+            document.getElementById('modalStartDate').innerText = startDate;
+            document.getElementById('modalEndDate').innerText = endDate;
+            document.getElementById('calendarModal').classList.remove('hidden');
+        } else {
+            alert('Vui lòng chọn ngày bắt đầu và kết thúc');
+        }
+    }
+
+    // Function to close the modal
+    function closeModal() {
+        document.getElementById('calendarModal').classList.add('hidden');
+    }
+
+    // Function to confirm the booking
+    function confirmBooking() {
+        // Add your booking confirmation logic here
+        alert('Booking confirmed from ' + document.getElementById('startDate').value + ' to ' + document.getElementById('endDate').value);
+        closeModal();
+    }
+
+    // Function to apply discount
+    document.getElementById('applyDiscount').addEventListener('click', function () {
+        const discountCode = document.getElementById('discountCode').value;
+        fetch(`/apply-discount?code=${discountCode}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('discountMessage').innerText = 'Giảm giá áp dụng thành công!';
+                    // Update the price based on the discount applied
+                    const originalPrice = parseFloat(document.querySelector('h1 span').innerText.replace(/,/g, ''));
+                    const discountedPrice = originalPrice * (1 - data.discount);
+                    document.querySelector('h1 span').innerText = discountedPrice.toLocaleString();
+                } else {
+                    document.getElementById('discountMessage').innerText = 'Mã khuyến mãi không hợp lệ';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
 </html>

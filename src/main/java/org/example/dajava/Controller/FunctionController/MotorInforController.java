@@ -86,7 +86,7 @@ public class MotorInforController {
 
         // Thêm yêu cầu đặt xe thông qua service
         yeuCauDatXeService.addYeuCauDatXe(yeuCauDatXe);
-
+        redirectAttributes.addFlashAttribute("errorMessage", "Chờ chủ xe xác nhận");
         return "redirect:/";
     }
     @GetMapping("/validateDiscountCode")
